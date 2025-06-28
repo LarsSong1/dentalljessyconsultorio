@@ -1,0 +1,25 @@
+[
+  {
+    "id": "1750612652860",
+    "name": "Jair alejandro",
+    "email": "damianalejandrofirst@gmail.com",
+    "password": "un3m12024**",
+    "specialties": [
+      "general",
+      "orthodontics",
+      "oral_surgery"
+    ],
+    "createdAt": "2025-06-22T17:17:32.860Z"
+  },
+  {
+    "id": "1751135411329",
+    "name": "Jair alejandro",
+    "email": "jairgavilanezcell@gmail.com",
+    "password": "un3m12024**",
+    "specialties": [
+      "orthodontics",
+      "oral_surgery"
+    ],
+    "createdAt": "2025-06-28T18:30:11.329Z"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1750612706899",
+    "patientId": "1750612680981",
+    "date": "2025-06-22",
+    "time": "16:18",
+    "reason": "Limpieza Dental",
+    "duration": "45",
+    "notes": "Idk",
+    "status": "completed",
+    "createdAt": "2025-06-22T17:18:26.899Z",
+    "updatedAt": "2025-06-22T17:18:34.616Z"
+  }
+]
