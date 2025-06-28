@@ -106,10 +106,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">Dr. {doctor?.name}</span>
                     <span className="truncate text-xs text-muted-foreground">
-                      {doctor?.specialties?.length > 0
-                        ? doctor.specialties.slice(0, 2).join(", ") + (doctor.specialties.length > 2 ? "..." : "")
+                      {Array.isArray(doctor?.specialties) && doctor.specialties.length > 0
+                        ? doctor.specialties.slice(0, 2).join(", ") +
+                        (doctor.specialties.length > 2 ? "..." : "")
                         : "Especialista"}
                     </span>
+
                   </div>
                   <ChevronUp className="ml-auto size-4" />
                 </SidebarMenuButton>
