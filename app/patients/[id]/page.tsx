@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, use } from "react"
 import { useAuth } from "@/components/auth-provider"
 import { useRouter } from "next/navigation"
 import { LayoutWrapper } from "@/components/layout-wrapper"
@@ -31,13 +31,10 @@ interface Appointment {
 }
 
 
-interface PageProps {
-  params: Promise<{ id: string }>
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
-}
 
-export default async function PatientDetailPage({ params }: PageProps) {
-  const { id } = await params
+
+export default function PatientDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const {id} = use(params)
   const { doctor, isLoading } = useAuth()
   const router = useRouter()
   const [patient, setPatient] = useState<Patient | null>(null)

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, use } from "react"
 import { useAuth } from "@/components/auth-provider"
 import { useRouter } from "next/navigation"
 import { LayoutWrapper } from "@/components/layout-wrapper"
@@ -32,13 +32,9 @@ interface MedicalRecord {
 }
 
 
-interface PageProps {
-  params: Promise<{ id: string }>
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
-}
 
-export default async function MedicalHistoryPage({ params }: PageProps) {
-  const { id } = await params
+export default function MedicalHistoryPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const { doctor, isLoading } = useAuth()
   const router = useRouter()
   const [patient, setPatient] = useState<Patient | null>(null)
