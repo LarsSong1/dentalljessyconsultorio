@@ -31,7 +31,14 @@ interface MedicalRecord {
   nextAppointment?: string
 }
 
-export default function MedicalHistoryPage({ params }: { params: { id: string } }) {
+
+interface PageProps {
+  params: Promise<{ id: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function MedicalHistoryPage({ params }: PageProps) {
+  const { id } = await params
   const { doctor, isLoading } = useAuth()
   const router = useRouter()
   const [patient, setPatient] = useState<Patient | null>(null)
@@ -47,7 +54,7 @@ export default function MedicalHistoryPage({ params }: { params: { id: string } 
     if (doctor) {
       fetchData()
     }
-  }, [doctor, isLoading, router, params.id])
+  }, [doctor, isLoading, router, id])
 
   const fetchData = async () => {
     try {
@@ -55,12 +62,12 @@ export default function MedicalHistoryPage({ params }: { params: { id: string } 
       const patientsResponse = await fetch("/api/patients")
       if (patientsResponse.ok) {
         const patients = await patientsResponse.json()
-        const foundPatient = patients.find((p: Patient) => p.id === params.id)
+        const foundPatient = patients.find((p: Patient) => p.id === id)
         setPatient(foundPatient || null)
       }
 
       // Fetch medical records
-      const recordsResponse = await fetch(`/api/medical-records?patientId=${params.id}`)
+      const recordsResponse = await fetch(`/api/medical-records?patientId=${id}`)
       if (recordsResponse.ok) {
         const records = await recordsResponse.json()
         setMedicalRecords(records)

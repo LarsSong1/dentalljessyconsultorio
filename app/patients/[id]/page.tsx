@@ -30,7 +30,14 @@ interface Appointment {
   status: string
 }
 
-export default function PatientDetailPage({ params }: { params: { id: string } }) {
+
+interface PageProps {
+  params: Promise<{ id: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function PatientDetailPage({ params }: PageProps) {
+  const { id } = await params
   const { doctor, isLoading } = useAuth()
   const router = useRouter()
   const [patient, setPatient] = useState<Patient | null>(null)
@@ -46,7 +53,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
     if (doctor) {
       fetchPatientData()
     }
-  }, [doctor, isLoading, router, params.id])
+  }, [doctor, isLoading, router, id])
 
   const fetchPatientData = async () => {
     try {
@@ -54,12 +61,12 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
       const patientsResponse = await fetch("/api/patients")
       if (patientsResponse.ok) {
         const patients = await patientsResponse.json()
-        const foundPatient = patients.find((p: Patient) => p.id === params.id)
+        const foundPatient = patients.find((p: Patient) => p.id === id)
         setPatient(foundPatient || null)
       }
 
       // Fetch upcoming appointments
-      const appointmentsResponse = await fetch(`/api/appointments?patientId=${params.id}`)
+      const appointmentsResponse = await fetch(`/api/appointments?patientId=${id}`)
       if (appointmentsResponse.ok) {
         const appointmentsData = await appointmentsResponse.json()
         setAppointments(appointmentsData.slice(0, 3)) // Show only next 3 appointments

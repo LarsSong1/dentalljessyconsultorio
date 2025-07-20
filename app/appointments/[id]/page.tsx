@@ -43,7 +43,14 @@ interface Patient {
   birthDate: string
 }
 
-export default function AppointmentDetailPage({ params }: { params: { id: string } }) {
+
+interface PageProps {
+  params: Promise<{ id: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function AppointmentDetailPage({ params }: PageProps) {
+  const { id } = await params
   const { doctor, isLoading } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
@@ -61,7 +68,7 @@ export default function AppointmentDetailPage({ params }: { params: { id: string
     if (doctor) {
       fetchAppointmentData()
     }
-  }, [doctor, isLoading, router, params.id])
+  }, [doctor, isLoading, router, id])
 
   const fetchAppointmentData = async () => {
     try {
@@ -69,7 +76,7 @@ export default function AppointmentDetailPage({ params }: { params: { id: string
       const appointmentsResponse = await fetch("/api/appointments")
       if (appointmentsResponse.ok) {
         const appointments = await appointmentsResponse.json()
-        const foundAppointment = appointments.find((a: Appointment) => a.id === params.id)
+        const foundAppointment = appointments.find((a: Appointment) => a.id === id)
         setAppointment(foundAppointment || null)
 
         if (foundAppointment) {
