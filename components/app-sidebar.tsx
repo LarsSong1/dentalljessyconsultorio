@@ -54,7 +54,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { doctor, logout } = useAuth()
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" {...props} >
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -122,11 +122,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 align="end"
                 sideOffset={4}
               >
-                <DropdownMenuItem className="gap-2">
+                {/* <DropdownMenuItem className="gap-2">
                   <Settings className="size-4" />
                   <span>Configuración</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                </DropdownMenuItem> */}
+                {/* <DropdownMenuSeparator /> */}
                 <DropdownMenuItem className="gap-2 text-red-600" onClick={() => logout()}>
                   <LogOut className="size-4" />
                   <span>Cerrar Sesión</span>

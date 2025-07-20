@@ -113,8 +113,8 @@ export default function MedicalRecordsPage() {
               </CardContent>
             </Card>
           ) : (
-            <div className="rounded-md border">
-              <Table>
+            <div className="rounded-md border overflow-x-auto">
+              <Table className="min-w-[700px]">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Paciente</TableHead>
