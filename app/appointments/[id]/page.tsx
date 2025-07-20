@@ -214,7 +214,7 @@ export default function AppointmentDetailPage({ params }: { params: { id: string
                   <XCircle className="mr-2 h-4 w-4" />
                   Posponer
                 </Button>
-                <Button onClick={() => updateAppointmentStatus("completed")}>
+                <Button onClick={() => updateAppointmentStatus("completed")} className="text-white">
                   <CheckCircle className="mr-2 h-4 w-4" />
                   Marcar como Atendida
                 </Button>
@@ -312,10 +312,10 @@ export default function AppointmentDetailPage({ params }: { params: { id: string
                     <Phone className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm">{patient.phone}</span>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  {/* <div className="flex items-center space-x-2">
                     <Mail className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm">{patient.email}</span>
-                  </div>
+                  </div> */}
                 </div>
                 <Button variant="outline" className="w-full" asChild>
                   <Link href={`/patients/${patient.id}`}>Ver Perfil Completo</Link>

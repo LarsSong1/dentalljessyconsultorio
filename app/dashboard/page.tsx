@@ -62,7 +62,9 @@ export default function DashboardPage() {
       const appointmentsResponse = await fetch("/api/appointments")
       if (appointmentsResponse.ok) {
         const appointments = await appointmentsResponse.json()
-        const today = new Date().toISOString().split("T")[0]
+        const today = new Date().toLocaleDateString("en-CA", {
+          timeZone: "America/Guayaquil"
+        })
         const todayAppts = appointments
           .filter((apt: any) => apt.date === today)
           .sort((a: any, b: any) => a.time.localeCompare(b.time))
@@ -176,26 +178,26 @@ export default function DashboardPage() {
               <p className="text-sm text-muted-foreground">Accesos directos a funciones principales</p>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button asChild className="w-full justify-start h-12">
-                <Link href="/patients/new">
+              <Button asChild variant="outline" className="w-full justify-start h-12">
+                <Link href="/patients/new" className="">
                   <User className="mr-3 h-4 w-4" />
                   Nuevo Paciente
                 </Link>
               </Button>
               <Button asChild variant="outline" className="w-full justify-start h-12">
-                <Link href="/appointments/new">
+                <Link href="/appointments/new" className="">
                   <CalendarDays className="mr-3 h-4 w-4" />
                   Agendar Cita
                 </Link>
               </Button>
               <Button asChild variant="outline" className="w-full justify-start h-12">
-                <Link href="/medical-records">
+                <Link href="/medical-records" className="">
                   <Activity className="mr-3 h-4 w-4" />
-                  Nuevo Registro
+                  Ver Registros
                 </Link>
               </Button>
               <Button asChild variant="outline" className="w-full justify-start h-12">
-                <Link href="/patients">
+                <Link href="/patients" className="">
                   <Users className="mr-3 h-4 w-4" />
                   Ver Pacientes
                 </Link>

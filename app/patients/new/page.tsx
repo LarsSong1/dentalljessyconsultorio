@@ -35,7 +35,13 @@ export default function NewPatientPage() {
       const response = await fetch("/api/patients", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          medicalHistory: formData.medicalHistory
+            .split(",")
+            .map((item) => item.trim())
+            .filter((item) => item !== ""),
+        }),
       })
 
       if (response.ok) {
@@ -93,10 +99,10 @@ export default function NewPatientPage() {
                   <Label htmlFor="name">Nombre Completo *</Label>
                   <Input id="name" name="name" value={formData.name} onChange={handleChange} required />
                 </div>
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="email">Email *</Label>
                   <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required />
-                </div>
+                </div> */}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -135,6 +141,7 @@ export default function NewPatientPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="medicalHistory">Historial Médico Previo</Label>
+                <p className="text-xs">Separa con , cada alergia</p>
                 <Textarea
                   id="medicalHistory"
                   name="medicalHistory"
@@ -146,7 +153,7 @@ export default function NewPatientPage() {
               </div>
 
               <div className="flex space-x-4">
-                <Button type="submit" disabled={isLoading}>
+                <Button type="submit" disabled={isLoading} className="text-white">
                   {isLoading ? "Registrando..." : "Registrar Paciente"}
                 </Button>
                 <Button asChild type="button" variant="outline">

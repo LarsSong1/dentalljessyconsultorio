@@ -1,14 +1,26 @@
 [
   {
-    "id": "1750612706899",
-    "patientId": "1750612680981",
-    "date": "2025-06-22",
-    "time": "16:18",
-    "reason": "Limpieza Dental",
-    "duration": "45",
-    "notes": "Idk",
+    "id": "1752968380551",
+    "patientId": "1752967163301",
+    "date": "2025-07-19",
+    "time": "18:39",
+    "reason": "Obturación",
+    "duration": "30",
+    "notes": "Nota de la cita",
     "status": "completed",
-    "createdAt": "2025-06-22T17:18:26.899Z",
-    "updatedAt": "2025-06-22T17:18:34.616Z"
+    "createdAt": "2025-07-19T23:39:40.551Z",
+    "updatedAt": "2025-07-19T23:46:49.987Z"
+  },
+  {
+    "id": "1752969383178",
+    "patientId": "1752967163301",
+    "date": "2025-07-21",
+    "time": "19:56",
+    "reason": "Endodoncia",
+    "duration": "60",
+    "notes": "Notas",
+    "status": "completed",
+    "createdAt": "2025-07-19T23:56:23.178Z",
+    "updatedAt": "2025-07-19T23:56:29.253Z"
   }
 ]

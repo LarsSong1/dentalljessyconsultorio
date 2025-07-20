@@ -110,7 +110,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
                 <ToothButton
                   key={tooth}
                   number={tooth}
-                  position={index < 3 ? "Incisivo" : index < 4 ? "Canino" : index < 6 ? "Premolar" : "Molar"}
+                  position={index < 2 ? "Incisivo" : index < 3 ? "Canino" : index < 5 ? "Premolar" : "Molar"}
                 />
               ))}
             </div>

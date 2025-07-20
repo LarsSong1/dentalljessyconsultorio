@@ -132,7 +132,7 @@ export default function RegisterPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full text-white" disabled={isLoading}>
               {isLoading ? "Registrando..." : "Registrar Cuenta"}
             </Button>
           </form>

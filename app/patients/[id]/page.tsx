@@ -18,7 +18,7 @@ interface Patient {
   birthDate: string
   address: string
   emergencyContact: string
-  medicalHistory: string
+  medicalHistory: []
   totalAppointments: number
 }
 
@@ -115,7 +115,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
               </Link>
             </Button> */}
             <Button asChild>
-              <Link href={`/appointments/new?patientId=${patient.id}`}>
+              <Link href={`/appointments/new?patientId=${patient.id}`} className="text-white">
                 <Calendar className="mr-2 h-4 w-4" />
                 Nueva Cita
               </Link>
@@ -135,13 +135,13 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
+                  {/* <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">Email</p>
                     <div className="flex items-center space-x-2">
                       <Mail className="h-4 w-4 text-muted-foreground" />
                       <span>{patient.email}</span>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">Teléfono</p>
                     <div className="flex items-center space-x-2">
@@ -151,19 +151,7 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Edad</p>
-                    <p className="text-lg">{calculateAge(patient.birthDate)} años</p>
-                  </div> */}
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Tipo de Sangre</p>
-                    <div className="flex items-center space-x-2">
-                      <Heart className="h-4 w-4 text-red-500" />
-                      <span>O+</span>
-                    </div>
-                  </div>
-                </div>
+
 
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-muted-foreground">Dirección</p>
@@ -183,7 +171,19 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                 {patient.medicalHistory && (
                   <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">Alergias</p>
-                    <Badge variant="destructive">Penicilina</Badge>
+                    <div className="flex w-full gap-2">
+                      {Array.isArray(patient.medicalHistory) && patient.medicalHistory.length > 0 ? (
+                        patient.medicalHistory.map((data) => (
+                          <Badge key={data} className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
+                            {data}
+                          </Badge>
+                        ))
+                      ) : (
+                        <p className="text-sm text-muted-foreground">No hay alergias registradas</p>
+                      )}
+
+                    </div>
+                    {/* <Badge variant="destructive">Penicilina</Badge> */}
                   </div>
                 )}
               </CardContent>
@@ -201,14 +201,14 @@ export default function PatientDetailPage({ params }: { params: { id: string } }
                   <p className="text-sm font-medium text-muted-foreground">Total de Visitas</p>
                   <p className="text-3xl font-bold">{patient.totalAppointments}</p>
                 </div>
-                <div>
+                {/* <div>
                   <p className="text-sm font-medium text-muted-foreground">Última Visita</p>
                   <p className="text-lg">2024-01-15</p>
-                </div>
-                <div>
+                </div> */}
+                {/* <div>
                   <p className="text-sm font-medium text-muted-foreground">Estado</p>
                   <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Activo</Badge>
-                </div>
+                </div> */}
                 <Button className="w-full" variant="outline" asChild>
                   <Link href={`/patients/${patient.id}/medical-history`}>Ver Historial Completo</Link>
                 </Button>

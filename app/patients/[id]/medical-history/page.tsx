@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, FileText, Calendar, DollarSign, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import dayjs from "dayjs"
 
 interface Patient {
   id: string
@@ -180,7 +181,7 @@ export default function MedicalHistoryPage({ params }: { params: { id: string } 
                     <div>
                       <h3 className="text-lg font-semibold">Limpieza dental</h3>
                       <p className="text-sm text-muted-foreground">
-                        Dr. {doctor.name} - {new Date(record.date).toLocaleDateString()}
+                        Dr. {doctor.name} - {dayjs(record.date).format("DD-MM-YYYY")} a las {record.time}
                       </p>
                     </div>
                     <div className="text-right">

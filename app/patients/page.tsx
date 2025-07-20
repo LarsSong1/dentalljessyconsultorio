@@ -28,6 +28,7 @@ export default function PatientsPage() {
   const [patients, setPatients] = useState<Patient[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [loading, setLoading] = useState(true)
+  const [lastVisits, setLastVisits] = useState<Record<string, string>>({})
 
   useEffect(() => {
     if (!isLoading && !doctor) {
@@ -46,6 +47,7 @@ export default function PatientsPage() {
       if (response.ok) {
         const data = await response.json()
         setPatients(data)
+        await fetchLastVisits(data)
       }
     } catch (error) {
       console.error("Error fetching patients:", error)
@@ -71,10 +73,37 @@ export default function PatientsPage() {
     return age
   }
 
-  const getLastVisit = () => {
-    // Simulamos la última visita
-    return "2024-01-15"
+
+  const fetchLastVisits = async (patients: Patient[]) => {
+    const visits: Record<string, string> = {}
+
+    for (const patient of patients) {
+      try {
+        const response = await fetch(`/api/appointments/${patient.id}`)
+        if (response.ok) {
+          const appointment = await response.json()
+          visits[patient.id] = new Date(appointment.date).toLocaleDateString() // Asegúrate que el campo sea `date`
+        } else {
+          visits[patient.id] = "No hay visitas"
+        }
+      } catch (error) {
+        visits[patient.id] = "Error"
+      }
+    }
+
+    setLastVisits(visits)
   }
+
+
+  // const getLastVisit = async (patientId: any) => {
+  //   // Simulamos la última visita
+  //   const response = await fetch(`/api/appointments/${patientId}}`)
+  //   if (!response.ok) {
+  //     return "No hay visitas registradas"
+  //   }
+  //   const appointments = await response.json()
+  //   console.log(appointments)
+  // }
 
   if (isLoading || loading) {
     return <div className="flex items-center justify-center min-h-screen">Cargando...</div>
@@ -93,7 +122,7 @@ export default function PatientsPage() {
             <p className="text-muted-foreground">Gestiona la información de tus pacientes</p>
           </div>
           <Button asChild>
-            <Link href="/patients/new">
+            <Link href="/patients/new" className="text-white">
               <Plus className="mr-2 h-4 w-4" />
               Nuevo Paciente
             </Link>
@@ -137,7 +166,7 @@ export default function PatientsPage() {
                     <TableCell>{patient.email}</TableCell>
                     <TableCell>{patient.phone}</TableCell>
                     <TableCell>{calculateAge(patient.birthDate)}</TableCell>
-                    <TableCell>{getLastVisit()}</TableCell>
+                    <TableCell>{lastVisits[patient.id]}</TableCell>
                     <TableCell>{patient.totalAppointments}</TableCell>
                     <TableCell>
                       <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Activo</Badge>
@@ -149,11 +178,11 @@ export default function PatientsPage() {
                             <Eye className="h-4 w-4" />
                           </Link>
                         </Button>
-                        <Button variant="ghost" size="sm" asChild>
+                        {/* <Button variant="ghost" size="sm" asChild>
                           <Link href={`/patients/${patient.id}/edit`}>
                             <Edit className="h-4 w-4" />
                           </Link>
-                        </Button>
+                        </Button> */}
                         <Button variant="ghost" size="sm" asChild>
                           <Link href={`/appointments/new?patientId=${patient.id}`}>
                             <Calendar className="h-4 w-4" />

@@ -1,35 +1,39 @@
 [
   {
-    "id": "1750612730730",
-    "appointmentId": "1750612706899",
-    "patientId": "1750612680981",
-    "teethTreated": [],
-    "description": "adada",
-    "materials": "adadadad",
-    "observations": "dadad",
-    "nextAppointment": "2025-06-29",
-    "cost": 52.2,
-    "date": "2025-06-22",
-    "time": "16:18",
-    "createdAt": "2025-06-22T17:18:50.730Z"
+    "id": "1752968846754",
+    "appointmentId": "1752968380551",
+    "patientId": "1752967163301",
+    "teethTreated": [
+      15,
+      18,
+      41,
+      42
+    ],
+    "description": "Se hizo esto sdjasdjasjda",
+    "materials": "Fresa",
+    "observations": "Ninguna",
+    "nextAppointment": "2025-07-30",
+    "cost": 10,
+    "date": "2025-07-19",
+    "time": "18:39",
+    "createdAt": "2025-07-19T23:47:26.754Z"
   },
   {
-    "id": "1750612844822",
-    "appointmentId": "1750612818456",
-    "patientId": "1750612680981",
+    "id": "1752969403468",
+    "appointmentId": "1752969383178",
+    "patientId": "1752967163301",
     "teethTreated": [
-      23,
-      24,
-      43,
-      44
+      17,
+      32,
+      35
     ],
-    "description": "adadad",
-    "materials": "adad",
-    "observations": "adad",
-    "nextAppointment": "2025-06-29",
-    "cost": 10,
-    "date": "2025-06-28",
-    "time": "16:20",
-    "createdAt": "2025-06-22T17:20:44.822Z"
+    "description": "Nose",
+    "materials": "Nose",
+    "observations": "Nose",
+    "nextAppointment": "2025-07-31",
+    "cost": 5,
+    "date": "2025-07-21",
+    "time": "19:56",
+    "createdAt": "2025-07-19T23:56:43.468Z"
   }
 ]

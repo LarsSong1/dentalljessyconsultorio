@@ -261,7 +261,7 @@ export default function NewAppointmentPage() {
                     type="date"
                     value={formData.date}
                     onChange={handleChange}
-                    min={new Date().toISOString().split("T")[0]}
+                    min={new Date().toLocaleDateString("en-CA", { timeZone: "America/Guayaquil" })}
                     required
                   />
                 </div>
@@ -306,6 +306,7 @@ export default function NewAppointmentPage() {
                 <Button
                   type="submit"
                   disabled={isSubmitting || !formData.patientId || !formData.reason || loadingPatients}
+                  className="text-white"
                 >
                   {isSubmitting ? "Agendando..." : "Agendar Cita"}
                 </Button>

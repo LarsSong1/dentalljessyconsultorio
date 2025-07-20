@@ -148,7 +148,7 @@ export function MedicalRecordDialog({ open, onOpenChange, appointment, onSave }:
           </div>
 
           <div className="flex space-x-4">
-            <Button onClick={handleSave} disabled={isLoading || !description.trim()}>
+            <Button onClick={handleSave} disabled={isLoading || !description.trim()} className="text-white">
               {isLoading ? "Guardando..." : "Registrar Atención"}
             </Button>
             <Button variant="outline" onClick={() => onOpenChange(false)}>

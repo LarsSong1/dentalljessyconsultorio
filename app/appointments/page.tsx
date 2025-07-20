@@ -23,6 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import dayjs from "dayjs"
 
 interface Appointment {
   id: string
@@ -178,7 +179,7 @@ export default function AppointmentsPage() {
             <p className="text-muted-foreground">Gestiona las citas de tus pacientes</p>
           </div>
           <Button asChild>
-            <Link href="/appointments/new">
+            <Link href="/appointments/new" className="text-white">
               <Plus className="mr-2 h-4 w-4" />
               Nueva Cita
             </Link>
@@ -255,7 +256,7 @@ export default function AppointmentsPage() {
                 <Calendar className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No hay citas programadas</h3>
                 <p className="text-gray-600 mb-4">Comienza agendando tu primera cita</p>
-                <Button asChild>
+                <Button asChild className="text-white">
                   <Link href="/appointments/new">Agendar Primera Cita</Link>
                 </Button>
               </CardContent>
@@ -278,7 +279,7 @@ export default function AppointmentsPage() {
                   {filteredAppointments.map((appointment) => (
                     <TableRow key={appointment.id}>
                       <TableCell className="font-medium">{appointment.patientName}</TableCell>
-                      <TableCell>{new Date(appointment.date).toLocaleDateString()}</TableCell>
+                      <TableCell>{dayjs(appointment.date).format("DD-MM-YYYY")}</TableCell>
                       <TableCell>{appointment.time}</TableCell>
                       <TableCell>{appointment.reason}</TableCell>
                       <TableCell>{getDuration(appointment.reason)}</TableCell>

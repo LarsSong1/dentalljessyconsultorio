@@ -53,3 +53,30 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
+
+
+
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const patientId = params.id
+
+    const appointmentsData = fs.readFileSync(appointmentsFile, "utf8")
+    const appointments = JSON.parse(appointmentsData)
+
+
+
+    const patientAppointments = appointments
+      .filter((apt: any) => apt.patientId === patientId)
+      .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+    if (!patientAppointments) {
+      return NextResponse.json({ error: "Appointment not found" }, { status: 404 })
+    }
+
+    const appointment = patientAppointments[0]
+    
+    return NextResponse.json(appointment)
+  } catch (error) {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+  }
+}
