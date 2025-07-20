@@ -28,6 +28,7 @@ export function SpecialtySelect({ value, onChange, placeholder = "Selecciona esp
 
   return (
     <Select
+      instanceId="specialty-select"
       value={selectedOptions}
       onChange={(options) => onChange(options ? options.map((opt) => opt.value) : [])}
       options={specialties}

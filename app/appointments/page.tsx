@@ -156,11 +156,15 @@ export default function AppointmentsPage() {
     return durations[reason] || "30 min"
   }
 
+
+  console.log("Appointments:", appointments)
   const filteredAppointments = appointments.filter(
-    (appointment) =>
-      appointment.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      appointment.reason.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  (appointment) =>
+    (appointment.patientName?.toLowerCase?.() || "").includes(searchTerm.toLowerCase()) ||
+    (appointment.reason?.toLowerCase?.() || "").includes(searchTerm.toLowerCase())
+)
+
+
 
   if (isLoading || loading) {
     return <div className="flex items-center justify-center min-h-screen">Cargando...</div>

@@ -8,8 +8,24 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Search, Plus, Eye, Edit, Calendar } from "lucide-react"
+import { Search, Plus, Eye, Trash2, Calendar } from "lucide-react"
 import Link from "next/link"
+import { useToast } from "@/hooks/use-toast"
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog"
+
+
+
+
 
 interface Patient {
   id: string
@@ -29,6 +45,7 @@ export default function PatientsPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [loading, setLoading] = useState(true)
   const [lastVisits, setLastVisits] = useState<Record<string, string>>({})
+  const { toast } = useToast()
 
   useEffect(() => {
     if (!isLoading && !doctor) {
@@ -95,15 +112,25 @@ export default function PatientsPage() {
   }
 
 
-  // const getLastVisit = async (patientId: any) => {
-  //   // Simulamos la última visita
-  //   const response = await fetch(`/api/appointments/${patientId}}`)
-  //   if (!response.ok) {
-  //     return "No hay visitas registradas"
-  //   }
-  //   const appointments = await response.json()
-  //   console.log(appointments)
-  // }
+  const deletePatient = async (patient: string) => {
+    
+    try {
+      const res = await fetch(`/api/patients/${patient}`, {
+        method: "DELETE",
+      })
+
+      if (res.ok) {
+        toast({ title: "Paciente eliminado correctamente" })
+        await fetchPatients()
+        router.push("/patients")
+      } else {
+        toast({ title: "Error al eliminar", variant: "destructive" })
+      }
+    } catch (error) {
+      console.error("Error eliminando paciente:", error)
+      toast({ title: "Error al eliminar", variant: "destructive" })
+    }
+  }
 
   if (isLoading || loading) {
     return <div className="flex items-center justify-center min-h-screen">Cargando...</div>
@@ -150,7 +177,7 @@ export default function PatientsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Nombre</TableHead>
-                  <TableHead>Email</TableHead>
+                  {/* <TableHead>Email</TableHead> */}
                   <TableHead>Teléfono</TableHead>
                   <TableHead>Edad</TableHead>
                   <TableHead>Última Visita</TableHead>
@@ -163,7 +190,7 @@ export default function PatientsPage() {
                 {filteredPatients.map((patient) => (
                   <TableRow key={patient.id}>
                     <TableCell className="font-medium">{patient.name}</TableCell>
-                    <TableCell>{patient.email}</TableCell>
+                    {/* <TableCell>{patient.email}</TableCell> */}
                     <TableCell>{patient.phone}</TableCell>
                     <TableCell>{calculateAge(patient.birthDate)}</TableCell>
                     <TableCell>{lastVisits[patient.id]}</TableCell>
@@ -173,21 +200,41 @@ export default function PatientsPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex space-x-2">
-                        <Button variant="ghost" size="sm" asChild>
+                        <Button className="bg-green-300 hover:bg-green-500" variant="ghost" size="sm" asChild>
                           <Link href={`/patients/${patient.id}`}>
                             <Eye className="h-4 w-4" />
                           </Link>
                         </Button>
-                        {/* <Button variant="ghost" size="sm" asChild>
-                          <Link href={`/patients/${patient.id}/edit`}>
-                            <Edit className="h-4 w-4" />
-                          </Link>
-                        </Button> */}
-                        <Button variant="ghost" size="sm" asChild>
+                        <Button className="bg-green-300 hover:bg-green-500" size="sm" asChild>
                           <Link href={`/appointments/new?patientId=${patient.id}`}>
                             <Calendar className="h-4 w-4" />
                           </Link>
                         </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button size="sm" variant="destructive">
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>¿Eliminar paciente?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Esta acción no se puede deshacer. El paciente y su historial serán eliminados permanentemente.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                              <AlertDialogAction
+                                className="bg-red-600 hover:bg-red-700"
+                                onClick={() => deletePatient(patient.id)}
+                              >
+                                Eliminar
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+
                       </div>
                     </TableCell>
                   </TableRow>

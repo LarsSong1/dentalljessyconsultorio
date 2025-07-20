@@ -84,7 +84,7 @@ export default function MedicalHistoryPage({ params }: { params: { id: string } 
       <LayoutWrapper>
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Paciente no encontrado</h2>
-          <Button asChild>
+          <Button asChild className="text-white">
             <Link href="/patients">Volver a Pacientes</Link>
           </Button>
         </div>
@@ -132,9 +132,23 @@ export default function MedicalHistoryPage({ params }: { params: { id: string } 
               <CardTitle className="text-sm font-medium">Último Tratamiento</CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
-            <CardContent>
+            {/* <CardContent>
               <div className="text-2xl font-bold">2024-01-15</div>
               <p className="text-xs text-muted-foreground">Limpieza dental</p>
+            </CardContent> */}
+            <CardContent>
+              {medicalRecords.length > 0 ? (
+                <>
+                  <div className="text-2xl font-bold">{dayjs(medicalRecords[0].date).format("YYYY-MM-DD")}</div>
+                  {/* <p className="text-xs text-muted-foreground">{medicalRecords[0].description || "Sin descripción"}</p> */}
+                  <p className="text-xs">de citas</p>
+                </>
+              ) : (
+                <>
+                  <div className="text-2xl font-bold">—</div>
+                  <p className="text-xs text-muted-foreground">No hay tratamientos</p>
+                </>
+              )}
             </CardContent>
           </Card>
 
