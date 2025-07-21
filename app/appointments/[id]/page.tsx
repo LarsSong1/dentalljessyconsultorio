@@ -67,9 +67,15 @@ export default function AppointmentDetailPage({ params }: {params: Promise<{ id:
   }, [doctor, isLoading, router, id])
 
   const fetchAppointmentData = async () => {
+    if (!doctor) {
+      setLoading(false)
+      return
+    }
     try {
       // Fetch appointment details
-      const appointmentsResponse = await fetch("/api/appointments")
+      const appointmentsResponse = await fetch("/api/appointments", {
+        headers: { "doctor-id": doctor.id }
+      })
       if (appointmentsResponse.ok) {
         const appointments = await appointmentsResponse.json()
         const foundAppointment = appointments.find((a: Appointment) => a.id === id)
@@ -77,7 +83,9 @@ export default function AppointmentDetailPage({ params }: {params: Promise<{ id:
 
         if (foundAppointment) {
           // Fetch patient details
-          const patientsResponse = await fetch("/api/patients")
+          const patientsResponse = await fetch("/api/patients", {
+            headers: { "doctor-id": doctor.id }
+          })
           if (patientsResponse.ok) {
             const patients = await patientsResponse.json()
             const foundPatient = patients.find((p: Patient) => p.id === foundAppointment.patientId)
@@ -163,16 +171,16 @@ export default function AppointmentDetailPage({ params }: {params: Promise<{ id:
     }
   }
 
-  const calculateAge = (birthDate: string) => {
-    const today = new Date()
-    const birth = new Date(birthDate)
-    let age = today.getFullYear() - birth.getFullYear()
-    const monthDiff = today.getMonth() - birth.getMonth()
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--
-    }
-    return age
-  }
+  // const calculateAge = (birthDate: string) => {
+  //   const today = new Date()
+  //   const birth = new Date(birthDate)
+  //   let age = today.getFullYear() - birth.getFullYear()
+  //   const monthDiff = today.getMonth() - birth.getMonth()
+  //   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+  //     age--
+  //   }
+  //   return age
+  // }
 
   if (isLoading || loading) {
     return (
@@ -194,7 +202,7 @@ export default function AppointmentDetailPage({ params }: {params: Promise<{ id:
       <LayoutWrapper>
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Cita no encontrada</h2>
-          <Button asChild>
+          <Button asChild className="text-white">
             <Link href="/appointments">Volver a Citas</Link>
           </Button>
         </div>

@@ -69,7 +69,10 @@ export async function POST(request: NextRequest) {
 
     const { password: _, ...doctorWithoutPassword } = doctor.toObject()
 
-    return NextResponse.json(doctorWithoutPassword)
+    return NextResponse.json({
+      ...doctorWithoutPassword,
+      id: doctor._id.toString()
+    })
 
   } catch (error) {
     console.error("Error en login:", error)

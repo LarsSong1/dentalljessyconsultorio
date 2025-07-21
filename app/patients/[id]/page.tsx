@@ -53,9 +53,15 @@ export default function PatientDetailPage({ params }: { params: Promise<{ id: st
   }, [doctor, isLoading, router, id])
 
   const fetchPatientData = async () => {
+    if (!doctor) {
+      setLoading(false)
+      return
+    }
     try {
       // Fetch patient details
-      const patientsResponse = await fetch("/api/patients")
+      const patientsResponse = await fetch("/api/patients", {
+        headers: { "doctor-id": doctor.id }
+      })
       if (patientsResponse.ok) {
         const patients = await patientsResponse.json()
         const foundPatient = patients.find((p: Patient) => p.id === id)
@@ -63,7 +69,10 @@ export default function PatientDetailPage({ params }: { params: Promise<{ id: st
       }
 
       // Fetch upcoming appointments
-      const appointmentsResponse = await fetch(`/api/appointments?patientId=${id}`)
+      const appointmentsResponse = await fetch(`/api/appointments?patientId=${id}`, {
+        headers: { "doctor-id": doctor.id 
+          
+        }})
       if (appointmentsResponse.ok) {
         const appointmentsData = await appointmentsResponse.json()
         setAppointments(appointmentsData.slice(0, 3)) // Show only next 3 appointments

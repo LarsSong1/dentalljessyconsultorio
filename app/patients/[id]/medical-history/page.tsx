@@ -53,9 +53,15 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
   }, [doctor, isLoading, router, id])
 
   const fetchData = async () => {
+    if (!doctor) {
+      setLoading(false)
+      return
+    }
     try {
       // Fetch patient details
-      const patientsResponse = await fetch("/api/patients")
+      const patientsResponse = await fetch("/api/patients", {
+        headers: { "doctor-id": doctor.id }
+      })
       if (patientsResponse.ok) {
         const patients = await patientsResponse.json()
         const foundPatient = patients.find((p: Patient) => p.id === id)
@@ -63,7 +69,9 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
       }
 
       // Fetch medical records
-      const recordsResponse = await fetch(`/api/medical-records?patientId=${id}`)
+      const recordsResponse = await fetch(`/api/medical-records?patientId=${id}`, {
+        headers: { "doctor-id": doctor.id }
+      })
       if (recordsResponse.ok) {
         const records = await recordsResponse.json()
         setMedicalRecords(records)

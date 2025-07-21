@@ -10,6 +10,7 @@ export interface IPatient extends Document {
   emergencyContact: string
   medicalHistory: string[]
   createdAt: Date
+  doctor: mongoose.Schema.Types.ObjectId
 }
 
 const patientSchema = new Schema<IPatient>(
@@ -49,6 +50,11 @@ const patientSchema = new Schema<IPatient>(
       type: [String],
       default: [],
     },
+    doctor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Doctor",
+      required: true,
+    }
   },
   {
     timestamps: { createdAt: true, updatedAt: false },

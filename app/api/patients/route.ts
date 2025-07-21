@@ -68,18 +68,50 @@ import { connectDB } from "@/utils/mongoose"
 import Patient from "@/models/patients"
 import Appointment from "@/models/appointments"
 
-export async function GET() {
+// export async function GET() {
+//   try {
+//     await connectDB()
+
+//     const patients = await Patient.find().lean()
+
+//     // Obtener recuento de citas por paciente
+//     const appointments = await Appointment.find().lean()
+
+//     const patientsWithStats = patients.map((patient:any) => {
+//       const totalAppointments = appointments.filter(
+//         (apt:any) => apt.patientId === patient.id
+//       ).length
+
+//       return {
+//         ...patient,
+//         totalAppointments,
+//       }
+//     })
+
+//     return NextResponse.json(patientsWithStats)
+//   } catch (error) {
+//     console.error("Error al obtener pacientes:", error)
+//     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+//   }
+// }
+
+
+export async function GET(request: NextRequest) {
   try {
     await connectDB()
 
-    const patients = await Patient.find().lean()
+    const doctorId = request.headers.get("doctor-id")
+    if (!doctorId) {
+      return NextResponse.json({ error: "Doctor ID requerido" }, { status: 400 })
+    }
 
-    // Obtener recuento de citas por paciente
+    // Filtrar solo pacientes de este doctor
+    const patients = await Patient.find({ doctor: doctorId }).lean()
     const appointments = await Appointment.find().lean()
 
-    const patientsWithStats = patients.map((patient:any) => {
+    const patientsWithStats = patients.map((patient: any) => {
       const totalAppointments = appointments.filter(
-        (apt:any) => apt.patientId === patient.id
+        (apt: any) => apt.patientId === patient.id
       ).length
 
       return {
@@ -99,11 +131,27 @@ export async function POST(request: NextRequest) {
   try {
     await connectDB()
 
-    const patientData = await request.json()
+    const {
+      name,
+      email,
+      phone,
+      birthDate,
+      address,
+      emergencyContact,
+      medicalHistory,
+      doctorId
+    } = await request.json()
 
     const newPatient = await Patient.create({
       id: Date.now().toString(),
-      ...patientData,
+      name,
+      email,
+      phone,
+      birthDate,
+      address,
+      emergencyContact,
+      medicalHistory,
+      doctor: doctorId, // 👈 importante
       createdAt: new Date().toISOString(),
     })
 

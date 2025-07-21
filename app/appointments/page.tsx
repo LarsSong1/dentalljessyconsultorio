@@ -69,8 +69,21 @@ export default function AppointmentsPage() {
   }, [doctor, isLoading, router])
 
   const fetchAppointments = async () => {
+    if (!doctor) {
+      toast({
+        title: "Error",
+        description: "No se ha detectado un doctor autenticado",
+        variant: "destructive",
+      })
+      return
+    }
+
     try {
-      const response = await fetch("/api/appointments")
+      const response = await fetch("/api/appointments", {
+        headers: {
+          "doctor-id": doctor.id,
+        }
+      })
       if (response.ok) {
         const data = await response.json()
         setAppointments(data)

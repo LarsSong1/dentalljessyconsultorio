@@ -1,7 +1,7 @@
-import mongoose, { Schema, model, models, Document } from "mongoose"
+import mongoose, { Schema, model, models, Document, Types } from "mongoose"
 
 // En models/appointments.ts (o en un archivo de tipos)
-export interface AppointmentData {
+export interface AppointmentData extends Document {
   id: string
   patientId: string
   date: string

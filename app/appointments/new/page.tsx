@@ -51,6 +51,7 @@ export default function NewAppointmentPage() {
     duration: "30",
     notes: "",
   })
+  
 
   useEffect(() => {
     if (!isLoading) {
@@ -63,12 +64,20 @@ export default function NewAppointmentPage() {
   }, [doctor, isLoading, router])
 
   const fetchPatients = async () => {
+    if (!doctor) {
+      setLoadingPatients(false)
+      return
+    }
     try {
       setLoadingPatients(true)
       setError(null)
       console.log("Fetching patients...")
 
-      const response = await fetch("/api/patients")
+      const response = await fetch("/api/patients", {
+        headers: {
+          "doctor-id": doctor.id
+        }
+      })
       console.log("Response status:", response.status)
 
       if (response.ok) {
@@ -94,6 +103,17 @@ export default function NewAppointmentPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+
+
+    if (!doctor) {
+      toast({
+        title: "Error",
+        description: "No se ha detectado un doctor autenticado",
+        variant: "destructive",
+      })
+      setIsSubmitting(false)
+      return
+    }
 
     try {
       const response = await fetch("/api/appointments", {

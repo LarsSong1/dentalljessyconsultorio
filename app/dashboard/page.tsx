@@ -50,16 +50,24 @@ export default function DashboardPage() {
   }, [doctor, isLoading, router])
 
   const fetchDashboardData = async () => {
+    if (!doctor) {
+      setLoading(false)
+      return
+    }
     try {
       // Fetch stats
-      const statsResponse = await fetch("/api/stats")
+      const statsResponse = await fetch("/api/stats", {
+        headers: { "doctor-id": doctor.id }
+      })
       if (statsResponse.ok) {
         const statsData = await statsResponse.json()
         setStats(statsData)
       }
 
       // Fetch today's appointments
-      const appointmentsResponse = await fetch("/api/appointments")
+      const appointmentsResponse = await fetch("/api/appointments", {
+        headers: { "doctor-id": doctor.id }
+      })
       if (appointmentsResponse.ok) {
         const appointments = await appointmentsResponse.json()
         const today = new Date().toLocaleDateString("en-CA", {

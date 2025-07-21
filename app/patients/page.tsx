@@ -59,8 +59,22 @@ export default function PatientsPage() {
   }, [doctor, isLoading, router])
 
   const fetchPatients = async () => {
+    if (!doctor) {
+      toast({
+        title: "Error",
+        description: "No se ha detectado un doctor autenticado",
+        variant: "destructive",
+      })
+      return
+    }
+
+
     try {
-      const response = await fetch("/api/patients")
+      const response = await fetch("/api/patients", {
+        headers: {
+          "doctor-id": doctor.id
+        }
+      })
       if (response.ok) {
         const data = await response.json()
         setPatients(data)

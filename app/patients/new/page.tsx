@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { useAuth } from "@/components/auth-provider"
 
 export default function NewPatientPage() {
   const router = useRouter()
@@ -26,10 +27,21 @@ export default function NewPatientPage() {
     emergencyContact: "",
     medicalHistory: "",
   })
+  const { doctor } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+
+
+    if (!doctor) {
+      toast({
+        title: "Error",
+        description: "No se ha detectado un doctor autenticado",
+        variant: "destructive",
+      })
+      return
+    }
 
     try {
       const response = await fetch("/api/patients", {
@@ -37,6 +49,7 @@ export default function NewPatientPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
+          doctorId: doctor.id,
           medicalHistory: formData.medicalHistory
             .split(",")
             .map((item) => item.trim())
