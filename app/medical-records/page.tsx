@@ -44,12 +44,22 @@ export default function MedicalRecordsPage() {
   }, [doctor, isLoading, router])
 
   const fetchRecords = async () => {
+    if (!doctor) {
+
+      setLoading(false)
+      return
+    }
     try {
-      const response = await fetch("/api/medical-records")
+      const response = await fetch("/api/medical-records", {
+        headers: { "doctor-id": doctor.id }
+      })
       if (response.ok) {
         const data = await response.json()
         // Add patient names to records
-        const patientsResponse = await fetch("/api/patients")
+        const patientsResponse = await fetch("/api/patients", {
+          headers: { "doctor-id": doctor.id 
+            
+          }})
         if (patientsResponse.ok) {
           const patients = await patientsResponse.json()
           const recordsWithPatientNames = data.map((record: any) => {
