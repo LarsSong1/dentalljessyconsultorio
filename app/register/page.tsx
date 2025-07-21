@@ -83,14 +83,15 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center py-12">
+      <Card className="w-full max-w-md shadow-none border-0">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <Stethoscope className="h-12 w-12 text-blue-600" />
           </div>
-          <CardTitle className="text-2xl">Registro de Doctor</CardTitle>
-          <CardDescription>Crea tu cuenta para acceder al sistema</CardDescription>
+          <CardTitle className="text-4xl font-bold">Dentall</CardTitle>
+          <CardTitle className="text-2xl">Registro Doctores</CardTitle>
+          <CardDescription className="text-xs">Crea tu cuenta para acceder al sistema</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">

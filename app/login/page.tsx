@@ -44,14 +44,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center ">
+      <Card className="w-full max-w-md border-0 shadow-none">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <Stethoscope className="h-12 w-12 text-blue-600" />
           </div>
+          <CardTitle className="text-4xl font-bold">Dentall</CardTitle>
           <CardTitle className="text-2xl">Sistema Médico Dental</CardTitle>
-          <CardDescription>Ingresa tus credenciales para continuar</CardDescription>
+          <CardDescription className="text-xs">Ingresa tus credenciales para continuar</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
