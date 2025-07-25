@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import dayjs from "dayjs"
 
 interface Appointment {
   id: string
@@ -45,7 +46,7 @@ interface Patient {
 
 
 
-export default function AppointmentDetailPage({ params }: {params: Promise<{ id: string }> }) {
+export default function AppointmentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const { doctor, isLoading } = useAuth()
   const router = useRouter()
@@ -171,16 +172,7 @@ export default function AppointmentDetailPage({ params }: {params: Promise<{ id:
     }
   }
 
-  // const calculateAge = (birthDate: string) => {
-  //   const today = new Date()
-  //   const birth = new Date(birthDate)
-  //   let age = today.getFullYear() - birth.getFullYear()
-  //   const monthDiff = today.getMonth() - birth.getMonth()
-  //   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-  //     age--
-  //   }
-  //   return age
-  // }
+
 
   if (isLoading || loading) {
     return (
@@ -273,7 +265,7 @@ export default function AppointmentDetailPage({ params }: {params: Promise<{ id:
                     <div className="flex items-center space-x-2">
                       <Clock className="h-4 w-4 text-muted-foreground" />
                       <span>
-                        {new Date(appointment.date).toLocaleDateString()} - {appointment.time}
+                        {dayjs(appointment.date).format('DD/MM/YYYY')} - {appointment.time}
                       </span>
                     </div>
                   </div>

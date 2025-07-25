@@ -113,7 +113,9 @@ export default function PatientsPage() {
         const response = await fetch(`/api/appointments/${patient.id}`)
         if (response.ok) {
           const appointment = await response.json()
-          visits[patient.id] = new Date(appointment.date).toLocaleDateString() // Asegúrate que el campo sea `date`
+          visits[patient.id] = new Date(`${appointment.date}T12:00:00`).toLocaleDateString("es-EC", {
+            timeZone: "America/Guayaquil",
+          })
         } else {
           visits[patient.id] = "No hay visitas"
         }
@@ -127,7 +129,7 @@ export default function PatientsPage() {
 
 
   const deletePatient = async (patient: string) => {
-    
+
     try {
       const res = await fetch(`/api/patients/${patient}`, {
         method: "DELETE",

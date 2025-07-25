@@ -150,7 +150,7 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
             <CardContent>
               {medicalRecords.length > 0 ? (
                 <>
-                  <div className="text-2xl font-bold">{dayjs(medicalRecords[0].date).format("YYYY-MM-DD")}</div>
+                  <div className="text-2xl font-bold">{dayjs(medicalRecords[0].date).format("DD/MM/YYYY")}</div>
                   {/* <p className="text-xs text-muted-foreground">{medicalRecords[0].description || "Sin descripción"}</p> */}
                   <p className="text-xs">de citas</p>
                 </>
@@ -206,7 +206,7 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
                     <div>
                       <h3 className="text-lg font-semibold">Limpieza dental</h3>
                       <p className="text-sm text-muted-foreground">
-                        Dr. {doctor.name} - {dayjs(record.date).format("DD-MM-YYYY")} a las {record.time}
+                        Dr. {doctor.name} - {dayjs(record.date).format("DD/MM/YYYY")} a las {record.time}
                       </p>
                     </div>
                     <div className="text-right">
@@ -251,7 +251,7 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
 
                   <div>
                     <p className="text-sm font-medium mb-1">Próxima Cita Recomendada:</p>
-                    <p className="text-sm text-muted-foreground">{record.nextAppointment || "2024-07-15"}</p>
+                    <p className="text-sm text-muted-foreground">{dayjs(record.nextAppointment).format('DD/MM/YYYY') || ""}</p>
                   </div>
                 </div>
               ))

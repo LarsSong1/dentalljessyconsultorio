@@ -57,9 +57,11 @@ export default function MedicalRecordsPage() {
         const data = await response.json()
         // Add patient names to records
         const patientsResponse = await fetch("/api/patients", {
-          headers: { "doctor-id": doctor.id 
-            
-          }})
+          headers: {
+            "doctor-id": doctor.id
+
+          }
+        })
         if (patientsResponse.ok) {
           const patients = await patientsResponse.json()
           const recordsWithPatientNames = data.map((record: any) => {
@@ -139,7 +141,11 @@ export default function MedicalRecordsPage() {
                   {filteredRecords.map((record) => (
                     <TableRow key={record.id}>
                       <TableCell className="font-medium">{record.patientName}</TableCell>
-                      <TableCell>{new Date(record.date).toLocaleDateString()}</TableCell>
+                      <TableCell>
+                        {new Date(`${record.date}T12:00:00`).toLocaleDateString("es-EC", {
+                          timeZone: "America/Guayaquil",
+                        })}
+                      </TableCell>
                       <TableCell>{record.description.substring(0, 50)}...</TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">

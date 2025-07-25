@@ -228,7 +228,7 @@ export default function PatientDetailPage({ params }: { params: Promise<{ id: st
               </CardContent>
             </Card>
 
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle>Próximas Citas</CardTitle>
               </CardHeader>
@@ -240,7 +240,7 @@ export default function PatientDetailPage({ params }: { params: Promise<{ id: st
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </div>

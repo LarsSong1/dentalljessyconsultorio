@@ -296,7 +296,7 @@ export default function AppointmentsPage() {
                   {filteredAppointments.map((appointment) => (
                     <TableRow key={appointment.id}>
                       <TableCell className="font-medium">{appointment.patientName}</TableCell>
-                      <TableCell>{dayjs(appointment.date).format("DD-MM-YYYY")}</TableCell>
+                      <TableCell>{dayjs(appointment.date).format("DD/MM/YYYY")}</TableCell>
                       <TableCell>{appointment.time}</TableCell>
                       <TableCell>{appointment.reason}</TableCell>
                       <TableCell>{getDuration(appointment.reason)}</TableCell>
