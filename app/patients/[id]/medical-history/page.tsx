@@ -245,7 +245,7 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
                   <div>
                     <p className="text-sm font-medium mb-1">Observaciones:</p>
                     <p className="text-sm text-muted-foreground">
-                      {record.observations || "Encías ligeramente inflamadas, se recomienda mejor higiene oral"}
+                      {record.observations || "Ninguna"}
                     </p>
                   </div>
 
