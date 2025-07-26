@@ -231,21 +231,21 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
                     <p className="text-sm font-medium mb-1">Descripción:</p>
                     <p className="text-sm text-muted-foreground">
                       {record.description ||
-                        "Limpieza dental completa con ultrasonido. Eliminación de sarro y placa bacteriana en sector anterior superior."}
+                        "No especificada"}
                     </p>
                   </div>
 
                   <div>
                     <p className="text-sm font-medium mb-1">Materiales:</p>
                     <p className="text-sm text-muted-foreground">
-                      {record.materials || "Ultrasonido, pasta profiláctica, flúor"}
+                      {record.materials || "No Especificado"}
                     </p>
                   </div>
 
                   <div>
                     <p className="text-sm font-medium mb-1">Observaciones:</p>
                     <p className="text-sm text-muted-foreground">
-                      {record.observations || "Ninguna"}
+                      {record.observations || "No esepecificadas"}
                     </p>
                   </div>
 
