@@ -49,6 +49,8 @@ export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id:
   }
 }
 
+
+
 // GET /api/appointments/[id] (última cita por patientId)
 export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   await connectDB()

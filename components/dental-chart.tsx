@@ -265,7 +265,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
           <div className="flex justify-center">
             <div className="flex gap-6">
               {/* Cuadrante Superior Derecho */}
-              <div className="grid grid-cols-8 gap-3">
+              <div className="grid lg:grid-cols-8 grid-cols-2 gap-3">
                 {permanentUpperRight.map((tooth, index) => (
                   <ToothButton
                     key={tooth}
@@ -275,7 +275,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
                 ))}
               </div>
               {/* Cuadrante Superior Izquierdo */}
-              <div className="grid grid-cols-8 gap-3">
+              <div className="grid lg:grid-cols-8 grid-cols-2 gap-3">
                 {permanentUpperLeft.map((tooth, index) => (
                   <ToothButton
                     key={tooth}
@@ -292,7 +292,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
             <div className="flex justify-center">
               <div className="flex gap-6">
                 {/* Cuadrante Superior Derecho Deciduo */}
-                <div className="grid grid-cols-5 gap-3">
+                <div className="grid lg:grid-cols-5 grid-cols-2 gap-3">
                   {deciduousUpperRight.map((tooth, index) => (
                     <ToothButton
                       key={tooth}
@@ -303,7 +303,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
                   ))}
                 </div>
                 {/* Cuadrante Superior Izquierdo Deciduo */}
-                <div className="grid grid-cols-5 gap-3">
+                <div className="grid lg:grid-cols-5 grid-cols-2 gap-3">
                   {deciduousUpperLeft.map((tooth, index) => (
                     <ToothButton
                       key={tooth}
@@ -328,7 +328,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
             <div className="flex justify-center">
               <div className="flex gap-6">
                 {/* Cuadrante Inferior Izquierdo Deciduo */}
-                <div className="grid grid-cols-5 gap-3">
+                <div className="grid lg:grid-cols-5 grid-cols-2 gap-3">
                   {deciduousLowerLeft.map((tooth, index) => (
                     <ToothButton
                       key={tooth}
@@ -339,7 +339,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
                   ))}
                 </div>
                 {/* Cuadrante Inferior Derecho Deciduo */}
-                <div className="grid grid-cols-5 gap-3">
+                <div className="grid lg:grid-cols-5 grid-cols-2 gap-3">
                   {deciduousLowerRight.map((tooth, index) => (
                     <ToothButton
                       key={tooth}
@@ -357,7 +357,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
           <div className="flex justify-center">
             <div className="flex gap-6">
               {/* Cuadrante Inferior Izquierdo */}
-              <div className="grid grid-cols-8 gap-3">
+              <div className="grid lg:grid-cols-8 grid-cols-2 gap-3">
                 {permanentLowerLeft.map((tooth, index) => (
                   <ToothButton
                     key={tooth}
@@ -367,7 +367,7 @@ export function DentalChart({ selectedTeeth, onTeethChange }: DentalChartProps) 
                 ))}
               </div>
               {/* Cuadrante Inferior Derecho */}
-              <div className="grid grid-cols-8 gap-3">
+              <div className="grid lg:grid-cols-8 grid-cols-2 gap-3">
                 {permanentLowerRight.map((tooth, index) => (
                   <ToothButton
                     key={tooth}

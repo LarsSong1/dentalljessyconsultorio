@@ -34,17 +34,17 @@ const items = [
   },
   {
     title: "Pacientes",
-    url: "/patients",
+    url: "/dashboard/patients",
     icon: Users,
   },
   {
     title: "Citas",
-    url: "/appointments",
+    url: "/dashboard/appointments",
     icon: Calendar,
   },
   {
     title: "Registros Médicos",
-    url: "/medical-records",
+    url: "/dashboard/medical-records",
     icon: FileText,
   },
 ]
@@ -54,7 +54,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { doctor, logout } = useAuth()
 
   return (
-    <Sidebar collapsible="icon" {...props} >
+    <Sidebar collapsible="icon" {...props} className="bg-white" >
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

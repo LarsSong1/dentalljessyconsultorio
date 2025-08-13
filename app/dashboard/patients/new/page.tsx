@@ -62,7 +62,7 @@ export default function NewPatientPage() {
           title: "Paciente registrado",
           description: "El paciente ha sido registrado exitosamente",
         })
-        router.push("/patients")
+        router.push("/dashboard/patients")
       } else {
         throw new Error("Error al registrar paciente")
       }
@@ -85,11 +85,10 @@ export default function NewPatientPage() {
   }
 
   return (
-    <LayoutWrapper breadcrumbs={[{ label: "Pacientes", href: "/patients" }, { label: "Nuevo Paciente" }]}>
       <div className="space-y-6">
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" asChild>
-            <Link href="/patients">
+            <Link href="/dashboard/patients">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver
             </Link>
@@ -170,13 +169,12 @@ export default function NewPatientPage() {
                   {isLoading ? "Registrando..." : "Registrar Paciente"}
                 </Button>
                 <Button asChild type="button" variant="outline">
-                  <Link href="/patients">Cancelar</Link>
+                  <Link href="/dashboard/patients">Cancelar</Link>
                 </Button>
               </div>
             </form>
           </CardContent>
         </Card>
       </div>
-    </LayoutWrapper>
   )
 }

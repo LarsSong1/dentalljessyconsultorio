@@ -83,7 +83,7 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
     }
   }
 
-  const totalCost = medicalRecords.reduce((sum, record) => sum + (record.cost || 150), 0)
+  const totalCost = medicalRecords.reduce((sum, record) => sum + (record.cost || 0), 0)
   const averageCost = medicalRecords.length > 0 ? totalCost / medicalRecords.length : 0
 
   if (isLoading || loading) {
@@ -92,29 +92,22 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
 
   if (!doctor || !patient) {
     return (
-      <LayoutWrapper>
+  
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Paciente no encontrado</h2>
           <Button asChild className="text-white">
-            <Link href="/patients">Volver a Pacientes</Link>
+            <Link href="/dashboard/patients">Volver a Pacientes</Link>
           </Button>
         </div>
-      </LayoutWrapper>
+   
     )
   }
 
-  return (
-    <LayoutWrapper
-      breadcrumbs={[
-        { label: "Pacientes", href: "/patients" },
-        { label: patient.name, href: `/patients/${patient.id}` },
-        { label: "Historial Médico" },
-      ]}
-    >
+  return ( 
       <div className="space-y-6">
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" asChild>
-            <Link href={`/patients/${patient.id}`}>
+            <Link href={`/dashboard/patients/${patient.id}`}>
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver al Perfil
             </Link>
@@ -210,7 +203,7 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-semibold">${record.cost || 150}.00</p>
+                      <p className="text-lg font-semibold">${record.cost || 0}.00</p>
                     </div>
                   </div>
 
@@ -259,6 +252,5 @@ export default function MedicalHistoryPage({ params }: { params: Promise<{ id: s
           </CardContent>
         </Card>
       </div>
-    </LayoutWrapper>
   )
 }

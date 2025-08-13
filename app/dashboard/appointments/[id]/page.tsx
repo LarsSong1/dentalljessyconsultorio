@@ -104,30 +104,13 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
   const updateAppointmentStatus = async (status: "completed" | "postponed") => {
     if (!appointment) return
 
-    try {
-      const response = await fetch(`/api/appointments/${appointment.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      })
+    if (status === "postponed") {
 
-      if (response.ok) {
-        if (status === "completed") {
-          setShowMedicalRecord(true)
-        } else {
-          toast({
-            title: "Cita pospuesta",
-            description: "La cita ha sido marcada como pospuesta",
-          })
-          setAppointment({ ...appointment, status })
-        }
-      }
-    } catch (error) {
       toast({
-        title: "Error",
-        description: "No se pudo actualizar el estado de la cita",
-        variant: "destructive",
+        title: "Cita pospuesta",
+        description: "La cita ha sido marcada como pospuesta",
       })
+      setAppointment({ ...appointment, status })
     }
   }
 
@@ -144,7 +127,7 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
           title: "Cita eliminada",
           description: "La cita ha sido eliminada exitosamente",
         })
-        router.push("/appointments")
+        router.push("/dashboard/appointments")
       } else {
         throw new Error("Error al eliminar la cita")
       }
@@ -191,33 +174,37 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
 
   if (!appointment || !patient) {
     return (
-      <LayoutWrapper>
-        <div className="text-center">
-          <h2 className="text-xl font-semibold mb-2">Cita no encontrada</h2>
-          <Button asChild className="text-white">
-            <Link href="/appointments">Volver a Citas</Link>
-          </Button>
-        </div>
-      </LayoutWrapper>
+
+      <div className="text-center">
+        <h2 className="text-xl font-semibold mb-2">Cita no encontrada</h2>
+        <Button asChild className="text-white">
+          <Link href="/dashboard/appointments">Volver a Citas</Link>
+        </Button>
+      </div>
+
     )
   }
 
   return (
-    <LayoutWrapper breadcrumbs={[{ label: "Citas", href: "/appointments" }, { label: "Detalles de la Cita" }]}>
+    <section>
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between lg:items-center lg:flex-row flex-col ">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Detalles de la Cita</h1>
             <p className="text-muted-foreground">Información completa de la cita médica</p>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 lg:flex-nowrap flex-wrap lg:mt-0 mt-4 lg:gap-0 gap-2">
             {appointment.status === "scheduled" && (
               <>
                 <Button variant="outline" onClick={() => updateAppointmentStatus("postponed")}>
                   <XCircle className="mr-2 h-4 w-4" />
                   Posponer
                 </Button>
-                <Button onClick={() => updateAppointmentStatus("completed")} className="text-white">
+                {/* <Button onClick={() => updateAppointmentStatus("completed")} className="text-white">
+                  <CheckCircle className="mr-2 h-4 w-4" />
+                  Marcar como Atendida
+                </Button> */}
+                <Button onClick={() => setShowMedicalRecord(true)} className="text-white">
                   <CheckCircle className="mr-2 h-4 w-4" />
                   Marcar como Atendida
                 </Button>
@@ -321,18 +308,18 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
                   </div> */}
                 </div>
                 <Button variant="outline" className="w-full" asChild>
-                  <Link href={`/patients/${patient.id}`}>Ver Perfil Completo</Link>
+                  <Link href={`/dashboard/patients/${patient.id}`}>Ver Perfil Completo</Link>
                 </Button>
               </CardContent>
             </Card>
           </div>
         </div>
       </div>
-
       {appointment && (
         <MedicalRecordDialog
           open={showMedicalRecord}
           onOpenChange={setShowMedicalRecord}
+          appoinmentState={() => setAppointment({ ...appointment, status: "completed" })}
           appointment={appointment}
           onSave={() => {
             setShowMedicalRecord(false)
@@ -344,6 +331,8 @@ export default function AppointmentDetailPage({ params }: { params: Promise<{ id
           }}
         />
       )}
-    </LayoutWrapper>
+
+    </section>
+
   )
 }

@@ -96,7 +96,6 @@ export default function MedicalRecordsPage() {
   }
 
   return (
-    <LayoutWrapper breadcrumbs={[{ label: "Registros Médicos" }]}>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
@@ -164,7 +163,7 @@ export default function MedicalRecordsPage() {
                       <TableCell>${record.cost || 0}</TableCell>
                       <TableCell>
                         <Button variant="ghost" size="sm" asChild>
-                          <Link href={`/patients/${record.patientId}/medical-history`}>
+                          <Link href={`/dashboard/patients/${record.patientId}/medical-history`}>
                             <Eye className="h-4 w-4" />
                           </Link>
                         </Button>
@@ -177,6 +176,5 @@ export default function MedicalRecordsPage() {
           )}
         </div>
       </div>
-    </LayoutWrapper>
   )
 }

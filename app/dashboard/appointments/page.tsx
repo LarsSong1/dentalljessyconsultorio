@@ -188,15 +188,14 @@ export default function AppointmentsPage() {
   }
 
   return (
-    <LayoutWrapper breadcrumbs={[{ label: "Citas Médicas" }]}>
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <div>
+        <div className="flex justify-between lg:flex-row flex-col lg:items-center items-start">
+          <div className="">
             <h1 className="text-3xl font-bold tracking-tight">Citas Médicas</h1>
             <p className="text-muted-foreground">Gestiona las citas de tus pacientes</p>
           </div>
           <Button asChild>
-            <Link href="/appointments/new" className="text-white">
+            <Link href="/dashboard/appointments/new" className="text-white">
               <Plus className="mr-2 h-4 w-4" />
               Nueva Cita
             </Link>
@@ -274,12 +273,12 @@ export default function AppointmentsPage() {
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No hay citas programadas</h3>
                 <p className="text-gray-600 mb-4">Comienza agendando tu primera cita</p>
                 <Button asChild className="text-white">
-                  <Link href="/appointments/new">Agendar Primera Cita</Link>
+                  <Link href="/dashboard/appointments/new">Agendar Primera Cita</Link>
                 </Button>
               </CardContent>
             </Card>
           ) : (
-            <div className="rounded-md border overflow-x-auto ">
+            <div className="rounded-md border overflow-x-scroll">
               <Table className="min-w-[700px]">
                 <TableHeader>
                   <TableRow>
@@ -304,7 +303,7 @@ export default function AppointmentsPage() {
                       <TableCell>
                         <div className="flex space-x-2">
                           <Button variant="ghost" size="sm" asChild>
-                            <Link href={`/appointments/${appointment.id}`}>Ver Detalles</Link>
+                            <Link href={`/dashboard/appointments/${appointment.id}`}>Ver Detalles</Link>
                           </Button>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
@@ -340,6 +339,5 @@ export default function AppointmentsPage() {
           )}
         </div>
       </div>
-    </LayoutWrapper>
   )
 }

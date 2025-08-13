@@ -73,10 +73,18 @@ export default function DashboardPage() {
         const today = new Date().toLocaleDateString("en-CA", {
           timeZone: "America/Guayaquil"
         })
+        // const todayAppts = appointments
+        //   .filter((apt: any) => apt.date === today)
+        //   .sort((a: any, b: any) => a.time.localeCompare(b.time))
+        //   .slice(0, 4) // Show only first 4 appointments
         const todayAppts = appointments
-          .filter((apt: any) => apt.date === today)
+          .filter((apt: any) =>
+            apt.date === today &&
+            apt.status !== "completed" &&
+            apt.status !== "postponed"
+          )
           .sort((a: any, b: any) => a.time.localeCompare(b.time))
-          .slice(0, 4) // Show only first 4 appointments
+          .slice(0, 4)
         setTodayAppointments(todayAppts)
       }
     } catch (error) {
@@ -95,7 +103,6 @@ export default function DashboardPage() {
   }
 
   return (
-    <LayoutWrapper breadcrumbs={[{ label: "Dashboard" }]}>
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
@@ -111,7 +118,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.totalPatients}</div>
-              <p className="text-xs text-muted-foreground">+12% desde el mes pasado</p>
+              <p className="text-xs text-muted-foreground">Registrados</p>
             </CardContent>
           </Card>
 
@@ -122,7 +129,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.todayAppointments}</div>
-              <p className="text-xs text-muted-foreground">2 citas completadas</p>
+              <p className="text-xs text-muted-foreground">Completadas y por hacer</p>
             </CardContent>
           </Card>
 
@@ -133,7 +140,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.totalMedicalRecords}</div>
-              <p className="text-xs text-muted-foreground">+8 nuevos esta semana</p>
+              <p className="text-xs text-muted-foreground">Totales</p>
             </CardContent>
           </Card>
 
@@ -144,7 +151,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.pendingAppointments}</div>
-              <p className="text-xs text-muted-foreground">Para esta semana</p>
+              <p className="text-xs text-muted-foreground">En tu plataforma</p>
             </CardContent>
           </Card>
         </div>
@@ -187,25 +194,25 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent className="space-y-3">
               <Button asChild variant="outline" className="w-full justify-start h-12">
-                <Link href="/patients/new" className="">
+                <Link href="/dashboard/patients/new" className="">
                   <User className="mr-3 h-4 w-4" />
                   Nuevo Paciente
                 </Link>
               </Button>
               <Button asChild variant="outline" className="w-full justify-start h-12">
-                <Link href="/appointments/new" className="">
+                <Link href="/dashboard/appointments/new" className="">
                   <CalendarDays className="mr-3 h-4 w-4" />
                   Agendar Cita
                 </Link>
               </Button>
               <Button asChild variant="outline" className="w-full justify-start h-12">
-                <Link href="/medical-records" className="">
+                <Link href="/dashboard/medical-records" className="">
                   <Activity className="mr-3 h-4 w-4" />
                   Ver Registros
                 </Link>
               </Button>
               <Button asChild variant="outline" className="w-full justify-start h-12">
-                <Link href="/patients" className="">
+                <Link href="/dashboard/patients" className="">
                   <Users className="mr-3 h-4 w-4" />
                   Ver Pacientes
                 </Link>
@@ -214,6 +221,5 @@ export default function DashboardPage() {
           </Card>
         </div>
       </div>
-    </LayoutWrapper>
   )
 }

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { DentalChart } from "@/components/dental-chart"
+import { useToast } from "@/hooks/use-toast"
 
 interface Appointment {
   id: string
@@ -23,9 +24,10 @@ interface MedicalRecordDialogProps {
   onOpenChange: (open: boolean) => void
   appointment: Appointment
   onSave: () => void
+  appoinmentState: React.Dispatch<React.SetStateAction<Appointment | null>>
 }
 
-export function MedicalRecordDialog({ open, onOpenChange, appointment, onSave }: MedicalRecordDialogProps) {
+export function MedicalRecordDialog({ open, onOpenChange, appointment, onSave, appoinmentState }: MedicalRecordDialogProps) {
   const [selectedTeeth, setSelectedTeeth] = useState<number[]>([])
   const [description, setDescription] = useState("")
   const [materials, setMaterials] = useState("")
@@ -33,8 +35,11 @@ export function MedicalRecordDialog({ open, onOpenChange, appointment, onSave }:
   const [nextAppointment, setNextAppointment] = useState("")
   const [cost, setCost] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const {toast} = useToast()
+  
 
   const handleSave = async () => {
+    updateAppointmentStatus('completed')
     if (!description.trim()) {
       return
     }
@@ -75,6 +80,32 @@ export function MedicalRecordDialog({ open, onOpenChange, appointment, onSave }:
       setIsLoading(false)
     }
   }
+
+
+  const updateAppointmentStatus = async (status: "completed" | "postponed") => {
+    if (!appointment) return
+
+    try {
+      const response = await fetch(`/api/appointments/${appointment.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      })
+
+      if (response.ok) {
+        if (status === "completed") {
+          onOpenChange(false)
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo actualizar el estado de la cita",
+        variant: "destructive",
+      })
+    }
+  }
+
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

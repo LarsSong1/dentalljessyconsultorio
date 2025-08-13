@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Search, Plus, Eye, Trash2, Calendar } from "lucide-react"
+import { Search, Plus, Eye, Trash2, Calendar, Pencil } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 import {
@@ -138,7 +138,7 @@ export default function PatientsPage() {
       if (res.ok) {
         toast({ title: "Paciente eliminado correctamente" })
         await fetchPatients()
-        router.push("/patients")
+        router.push("/dashboard/patients")
       } else {
         toast({ title: "Error al eliminar", variant: "destructive" })
       }
@@ -157,7 +157,6 @@ export default function PatientsPage() {
   }
 
   return (
-    <LayoutWrapper breadcrumbs={[{ label: "Pacientes" }]}>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
@@ -165,7 +164,7 @@ export default function PatientsPage() {
             <p className="text-muted-foreground">Gestiona la información de tus pacientes</p>
           </div>
           <Button asChild>
-            <Link href="/patients/new" className="text-white">
+            <Link href="/dashboard/patients/new" className="text-white">
               <Plus className="mr-2 h-4 w-4" />
               Nuevo Paciente
             </Link>
@@ -217,13 +216,18 @@ export default function PatientsPage() {
                     <TableCell>
                       <div className="flex space-x-2">
                         <Button className="bg-green-300 hover:bg-green-500" variant="ghost" size="sm" asChild>
-                          <Link href={`/patients/${patient.id}`}>
+                          <Link href={`/dashboard/patients/${patient.id}`}>
                             <Eye className="h-4 w-4" />
                           </Link>
                         </Button>
                         <Button className="bg-green-300 hover:bg-green-500" size="sm" asChild>
-                          <Link href={`/appointments/new?patientId=${patient.id}`}>
+                          <Link href={`/dashboard/appointments/new?patientId=${patient.id}`}>
                             <Calendar className="h-4 w-4" />
+                          </Link>
+                        </Button>
+                        <Button className="bg-green-300 hover:bg-green-500" size="sm" asChild>
+                          <Link href={`/dashboard/patients/${patient.id}/edit`}>
+                            <Pencil className="h-4 w-4" />
                           </Link>
                         </Button>
                         <AlertDialog>
@@ -260,6 +264,5 @@ export default function PatientsPage() {
           </div>
         </div>
       </div>
-    </LayoutWrapper>
   )
 }

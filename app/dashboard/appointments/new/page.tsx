@@ -134,7 +134,7 @@ export default function NewAppointmentPage() {
           title: "Cita agendada",
           description: "La cita ha sido agendada exitosamente",
         })
-        router.push("/appointments")
+        router.push("/dashboard/appointments")
       } else {
         throw new Error("Error al agendar cita")
       }
@@ -174,11 +174,11 @@ export default function NewAppointmentPage() {
   }
 
   return (
-    <LayoutWrapper breadcrumbs={[{ label: "Citas", href: "/appointments" }, { label: "Nueva Cita" }]}>
+ 
       <div className="space-y-6">
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" asChild>
-            <Link href="/appointments">
+            <Link href="/dashboard/appointments">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver
             </Link>
@@ -214,7 +214,7 @@ export default function NewAppointmentPage() {
                           Reintentar
                         </Button>
                         <Button type="button" variant="outline" size="sm" asChild>
-                          <Link href="/patients/new">
+                          <Link href="/dashboard/patients/new">
                             <Users className="h-4 w-4 mr-1" />
                             Crear Paciente
                           </Link>
@@ -331,13 +331,13 @@ export default function NewAppointmentPage() {
                   {isSubmitting ? "Agendando..." : "Agendar Cita"}
                 </Button>
                 <Button asChild type="button" variant="outline">
-                  <Link href="/appointments">Cancelar</Link>
+                  <Link href="/dashboard/appointments">Cancelar</Link>
                 </Button>
               </div>
             </form>
           </CardContent>
         </Card>
       </div>
-    </LayoutWrapper>
+   
   )
 }
